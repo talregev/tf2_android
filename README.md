@@ -1,4 +1,4 @@
-tf2_rosjava
+tf2_android
 ===========
 
 Android NDK Wrapper of tf2
