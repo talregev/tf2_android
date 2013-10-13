@@ -16,7 +16,7 @@ public class TransformBroadcaster extends AbstractNodeMain {
 
     @Override
     public GraphName getDefaultNodeName() {
-        return GraphName.of("transform_broadcaster"); ///< @TODO Randomize
+        return GraphName.of("transform_broadcaster_").join(GraphName.newAnonymous());
     }
 
     @Override

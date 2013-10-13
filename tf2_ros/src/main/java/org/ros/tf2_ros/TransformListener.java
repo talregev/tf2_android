@@ -44,7 +44,7 @@ public class TransformListener extends AbstractNodeMain {
 
 	@Override
 	  public GraphName getDefaultNodeName() {
-	    return GraphName.of("rosjava_tf2_ros/transform_listener");
+	    return GraphName.of("transform_listener_").join(GraphName.newAnonymous());
 	}
 
 	@Override
