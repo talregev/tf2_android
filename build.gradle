@@ -20,7 +20,7 @@ task wrapper(type: Wrapper) {
 
 allprojects {
     group 'org.ros.tf2'
-    version = '0.1.0'
+    version = '0.0.0-SNAPSHOT'
 }
 
 ext.androidBuildToolsVersion = "17"
