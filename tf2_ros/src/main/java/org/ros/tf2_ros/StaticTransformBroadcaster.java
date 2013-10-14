@@ -1,8 +1,10 @@
 package org.ros.tf2_ros;
 
+import org.ros.message.MessageFactory;
 import org.ros.namespace.GraphName;
 import org.ros.node.AbstractNodeMain;
 import org.ros.node.ConnectedNode;
+import org.ros.node.NodeConfiguration;
 import org.ros.node.topic.Publisher;
 
 import java.util.Arrays;
@@ -14,6 +16,9 @@ import tf2_msgs.TFMessage;
 public class StaticTransformBroadcaster extends AbstractNodeMain {
     private Publisher<TFMessage> mPublisher;
     TFMessage mNetMessage;
+
+    NodeConfiguration mNodeConfiguration = NodeConfiguration.newPrivate();
+    MessageFactory mMessageFactory = mNodeConfiguration.getTopicMessageFactory();
 
     @Override
     public GraphName getDefaultNodeName() {
@@ -34,6 +39,9 @@ public class StaticTransformBroadcaster extends AbstractNodeMain {
     }
 
     public void sendTransform(final List<TransformStamped> msgtf){
+        if(mNetMessage == null){
+            return;
+        }
         List<TransformStamped> netList = mNetMessage.getTransforms();
         for (TransformStamped aMsgtf : msgtf) {
             boolean match_found = false;
@@ -53,5 +61,10 @@ public class StaticTransformBroadcaster extends AbstractNodeMain {
 
         mNetMessage.setTransforms(netList);
         mPublisher.publish(mNetMessage);
+    }
+
+    public TransformStamped newMessage(){
+        TransformStamped tfs = mMessageFactory.newFromType(TransformStamped._TYPE);
+        return tfs;
     }
 }

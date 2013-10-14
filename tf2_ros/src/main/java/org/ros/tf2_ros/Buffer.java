@@ -20,16 +20,14 @@ public class Buffer {
         System.loadLibrary("tf2_ros");
     }
 
-    NodeConfiguration mNodeConfiguration;
-    MessageFactory mMessageFactory;
+    NodeConfiguration mNodeConfiguration = NodeConfiguration.newPrivate();
+    MessageFactory mMessageFactory = mNodeConfiguration.getTopicMessageFactory();
 
     public Buffer(){
         this(new Duration(0));
     }
 
     public Buffer(Duration cache_time){
-        mNodeConfiguration = NodeConfiguration.newPrivate();
-        mMessageFactory = mNodeConfiguration.getTopicMessageFactory();
         if(cache_time.isPositive()){ // Override default cache_time
             newBufferWithCacheDuration(cache_time.secs, cache_time.nsecs);
         }
