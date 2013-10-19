@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Google Inc.
+ * Copyright (C) 2013 Chad Rockey.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -14,10 +14,14 @@
  * the License.
  */
 
-include 'tf2_ros'
-include 'tf_echo'
-include 'tf_broadcaster_app'
-include 'lookup_benchmark'
-include 'insert_benchmark'
+dependencies {
+    compile project(':tf2_ros')
+}
 
-include 'tf2_test'
+apply plugin: 'android'
+
+android {
+    compileSdkVersion 17
+    buildToolsVersion androidBuildToolsVersion
+}
+ 
