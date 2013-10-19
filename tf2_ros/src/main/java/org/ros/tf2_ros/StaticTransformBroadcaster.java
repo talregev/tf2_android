@@ -46,8 +46,7 @@ public class StaticTransformBroadcaster extends AbstractNodeMain {
         for (TransformStamped aMsgtf : msgtf) {
             boolean match_found = false;
             for (int j = 0; j < netList.size(); j++) {
-                if (aMsgtf.getHeader().getFrameId().equals(netList.get(j).getHeader().getFrameId())
-                        && aMsgtf.getChildFrameId().equals(netList.get(j).getChildFrameId())) {
+                if (aMsgtf.getChildFrameId().equals(netList.get(j).getChildFrameId())) {
                     // Replace netList transform with new transform
                     netList.set(j, aMsgtf);
                     match_found = true;
@@ -64,7 +63,6 @@ public class StaticTransformBroadcaster extends AbstractNodeMain {
     }
 
     public TransformStamped newMessage(){
-        TransformStamped tfs = mMessageFactory.newFromType(TransformStamped._TYPE);
-        return tfs;
+        return mMessageFactory.newFromType(TransformStamped._TYPE);
     }
 }

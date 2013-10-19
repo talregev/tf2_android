@@ -42,7 +42,6 @@ public class TransformBroadcaster extends AbstractNodeMain {
     }
 
     public TransformStamped newMessage(){
-        TransformStamped tfs = mMessageFactory.newFromType(TransformStamped._TYPE);
-        return tfs;
+        return mMessageFactory.newFromType(TransformStamped._TYPE);
     }
 }

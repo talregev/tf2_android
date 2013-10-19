@@ -57,13 +57,10 @@ JNIEXPORT jboolean JNICALL Java_org_ros_tf2_1ros_Buffer_setTransform
 
     // Insert into buffer
     bool static_tf = (bool)pStatic;
-    buffer_core_->setTransform(tfs, authority, static_tf);
-
-    return (jboolean)true;
+    return (jboolean)buffer_core_->setTransform(tfs, authority, static_tf);
   }
 
-
-JNIEXPORT jdoubleArray JNICALL Java_org_ros_tf2_1ros_Buffer_lookupTransform
+JNIEXPORT jdoubleArray JNICALL Java_org_ros_tf2_1ros_Buffer_lookupTransform__Ljava_lang_String_2Ljava_lang_String_2II
   (JNIEnv* env, jobject pThis, jstring pTargetFrame, jstring pSourceFrame, jint sec, jint nsec){
 
     // Convert strings
@@ -116,6 +113,125 @@ JNIEXPORT jdoubleArray JNICALL Java_org_ros_tf2_1ros_Buffer_lookupTransform
     return dArray;
   }
 
+JNIEXPORT jdoubleArray JNICALL Java_org_ros_tf2_1ros_Buffer_lookupTransform__Ljava_lang_String_2IILjava_lang_String_2IILjava_lang_String_2
+  (JNIEnv* env, jobject pThis, jstring pTargetFrame, jint pTargetSec, jint pTargetNSec,
+   jstring pSourceFrame, jint pSourceSec, jint pSourceNSec, jstring pFixedFrame){
+    // Convert strings
+    const char *target_frame = env->GetStringUTFChars(pTargetFrame, 0);
+    if(target_frame == NULL){
+        return env->NewDoubleArray( 0 );
+    }
+    const char *source_frame = env->GetStringUTFChars(pSourceFrame, 0);
+    if(source_frame == NULL){
+        return env->NewDoubleArray( 0 );
+    }
+    const char *fixed_frame = env->GetStringUTFChars(pFixedFrame, 0);
+    if(target_frame == NULL){
+      return env->NewDoubleArray( 0 );
+    }
+
+    // Convert times
+    ros::Time target_time((uint32_t)pTargetSec, (uint32_t)pTargetNSec);
+    ros::Time source_time((uint32_t)pSourceSec, (uint32_t)pSourceNSec);
+
+    geometry_msgs::TransformStamped tfs;
+    try{
+       tfs = buffer_core_->lookupTransform(target_frame, target_time, source_frame, source_time, fixed_frame);
+    } catch(const tf2::ConnectivityException& e){
+      return env->NewDoubleArray( 0 ); ///< @TODO Should I rethrow a specific exception here?
+    } catch(const tf2::ExtrapolationException& e){
+      return env->NewDoubleArray( 0 );; ///< @TODO Should I rethrow a specific exception here?
+    } catch(const tf2::LookupException& e){
+      return env->NewDoubleArray( 0 ); ///< @TODO Should I rethrow a specific exception here?
+    } catch (...) {
+      return env->NewDoubleArray( 0 ); ///< @TODO Should I rethrow a specific exception here?
+    }
+
+    // Release strings
+    env->ReleaseStringUTFChars(pTargetFrame, target_frame);
+    env->ReleaseStringUTFChars(pSourceFrame, source_frame);
+    env->ReleaseStringUTFChars(pFixedFrame, fixed_frame);
+
+    // Encode results
+    jdoubleArray dArray = env->NewDoubleArray( 9 );
+    jdouble *arr = env->GetDoubleArrayElements(dArray, 0);
+    
+    arr[0] = tfs.transform.translation.x;
+    arr[1] = tfs.transform.translation.y;
+    arr[2] = tfs.transform.translation.z;
+    arr[3] = tfs.transform.rotation.w;
+    arr[4] = tfs.transform.rotation.x;
+    arr[5] = tfs.transform.rotation.y;
+    arr[6] = tfs.transform.rotation.z;
+    arr[7] = tfs.header.stamp.sec;
+    arr[8] = tfs.header.stamp.nsec;
+    env->ReleaseDoubleArrayElements(dArray, arr, 0);
+
+    return dArray;
+  }
+
+JNIEXPORT jboolean JNICALL Java_org_ros_tf2_1ros_Buffer_canTransform__Ljava_lang_String_2Ljava_lang_String_2IILjava_lang_String_2
+  (JNIEnv* env, jobject pThis, jstring pTargetFrame, jstring pSourceFrame, jint sec, jint nsec, jstring pErrorMsg){
+    // Convert strings
+    const char *target_frame = env->GetStringUTFChars(pTargetFrame, 0);
+    if(target_frame == NULL){
+        return (jboolean)false;
+    }
+    const char *source_frame = env->GetStringUTFChars(pSourceFrame, 0);
+    if(source_frame == NULL){
+        return (jboolean)false;
+    }
+
+    // Convert time
+    ros::Time lookup_time((uint32_t)sec, (uint32_t)nsec);
+
+    std::string error_msg;
+    bool out = buffer_core_->canTransform(target_frame, source_frame, lookup_time, &error_msg);
+
+    // Release strings
+    env->ReleaseStringUTFChars(pTargetFrame, target_frame);
+    env->ReleaseStringUTFChars(pSourceFrame, source_frame);
+
+    // Set error message
+    pErrorMsg = env->NewStringUTF(error_msg.c_str());
+    return (jboolean)out;
+  }
+
+JNIEXPORT jboolean JNICALL Java_org_ros_tf2_1ros_Buffer_canTransform__Ljava_lang_String_2IILjava_lang_String_2IILjava_lang_String_2Ljava_lang_String_2
+  (JNIEnv* env, jobject pThis, jstring pTargetFrame, jint pTargetSec, jint pTargetNSec,
+   jstring pSourceFrame, jint pSourceSec, jint pSourceNSec, jstring pFixedFrame, jstring pErrorMsg){
+    // Convert strings
+    const char *target_frame = env->GetStringUTFChars(pTargetFrame, 0);
+    if(target_frame == NULL){
+        return (jboolean)false;
+    }
+    const char *source_frame = env->GetStringUTFChars(pSourceFrame, 0);
+    if(source_frame == NULL){
+        return (jboolean)false;
+    }
+    const char *fixed_frame = env->GetStringUTFChars(pFixedFrame, 0);
+    if(target_frame == NULL){
+        return (jboolean)false;
+    }
+
+    // Convert times
+    ros::Time target_time((uint32_t)pTargetSec, (uint32_t)pTargetNSec);
+    ros::Time source_time((uint32_t)pSourceSec, (uint32_t)pSourceNSec);
+
+    std::string error_msg;
+    bool out = buffer_core_->canTransform(target_frame, target_time, source_frame, source_time, fixed_frame, &error_msg);
+
+    // Release strings
+    env->ReleaseStringUTFChars(pTargetFrame, target_frame);
+    env->ReleaseStringUTFChars(pSourceFrame, source_frame);
+    env->ReleaseStringUTFChars(pFixedFrame, fixed_frame);
+
+    // Set error message
+    pErrorMsg = env->NewStringUTF(error_msg.c_str());
+    return (jboolean)out;
+  }
+
+
 JNIEXPORT jstring JNICALL Java_org_ros_tf2_1ros_Buffer_allFramesAsYAML
   (JNIEnv* env, jobject pThis){
     std::string frames = buffer_core_->allFramesAsYAML();
@@ -130,6 +246,21 @@ JNIEXPORT jstring JNICALL Java_org_ros_tf2_1ros_Buffer_allFramesAsString
     jstring out;
     out = env->NewStringUTF(frames.c_str());
     return out;
+  }
+
+JNIEXPORT jintArray JNICALL Java_org_ros_tf2_1ros_Buffer_getNativeCacheLength
+  (JNIEnv* env, jobject pThis){
+    ros::Duration d = buffer_core_->getCacheLength();
+
+    // Encode results
+    jintArray dArray = env->NewIntArray( 2 );
+    jint *arr = env->GetIntArrayElements(dArray, 0);
+    
+    arr[0] = d.sec;
+    arr[1] = d.nsec;
+    env->ReleaseIntArrayElements(dArray, arr, 0);
+
+    return dArray;
   }
 
 JNIEXPORT void JNICALL Java_org_ros_tf2_1ros_Buffer_clear
