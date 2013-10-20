@@ -1,8 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 
-stlibs += boost_system boost_thread boost_signals 
+stlibs += tf2 boost_system boost_thread boost_signals 
 stlibs += cpp_common console_bridge rostime
-stlibs += tf2
 
 shlibs := $(stlibs)
 
