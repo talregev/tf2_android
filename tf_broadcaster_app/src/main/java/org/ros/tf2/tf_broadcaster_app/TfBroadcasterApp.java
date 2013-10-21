@@ -1,6 +1,5 @@
 package org.ros.tf2.tf_broadcaster_app;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -14,6 +13,7 @@ import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
 import org.ros.tf2_ros.TransformBroadcaster;
 import org.ros.tf2_ros.StaticTransformBroadcaster;
+import static java.lang.Math.*;
 
 import geometry_msgs.Quaternion;
 import geometry_msgs.TransformStamped;
@@ -40,10 +40,15 @@ public class TfBroadcasterApp extends RosActivity
     private CheckBox mDynamicCheck;
 
     private void fromRPY(Quaternion q, double r, double p, double y){
-        q.setW(1.0);
-        q.setX(0.0);
-        q.setY(0.0);
-        q.setZ(0.0);
+        double qw = cos(r/2.0)*cos(p/2.0)*cos(y/2.0) + sin(r/2.0)*sin(p/2.0)*sin(y/2.0);
+        double qx = sin(r/2.0)*cos(p/2.0)*cos(y/2.0) - cos(r/2.0)*sin(p/2.0)*sin(y/2.0);
+        double qy = cos(r/2.0)*sin(p/2.0)*cos(y/2.0) + sin(r/2.0)*cos(p/2.0)*sin(y/2.0);
+        double qz = cos(r/2.0)*cos(p/2.0)*sin(y/2.0) - sin(r/2.0)*sin(p/2.0)*cos(y/2.0);
+
+        q.setW(qw);
+        q.setX(qx);
+        q.setY(qy);
+        q.setZ(qz);
     }
 
     class SliderChangeListener implements SeekBar.OnSeekBarChangeListener{
