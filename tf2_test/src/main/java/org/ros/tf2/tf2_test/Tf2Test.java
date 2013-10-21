@@ -131,12 +131,8 @@ public class Tf2Test extends Activity
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(!mRunTests){
-                    new Thread(new Runnable() {
-                        public void run() {
-                            mRunTests = true;
-                            new LongOperation().execute("");
-                        }
-                    }).start();
+                    mRunTests = true;
+                    new LongOperation().execute();
                 }
             }
         });

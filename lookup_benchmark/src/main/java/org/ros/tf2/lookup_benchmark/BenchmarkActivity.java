@@ -3,6 +3,7 @@ package org.ros.tf2.lookup_benchmark;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.AsyncTask;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -109,14 +110,10 @@ public class BenchmarkActivity extends Activity
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(mRunBenchmark == false){
-                    new Thread(new Runnable() {
-                        public void run() {
-                            mRunBenchmark = true;
-                            EditText et = (EditText)findViewById(R.id.editNumLookups);
-                            mLookups = Integer.parseInt(et.getText().toString());
-                            new LongOperation().execute("");
-                        }
-                    }).start();
+                    mRunBenchmark = true;
+                    EditText et = (EditText)findViewById(R.id.editNumLookups);
+                    mLookups = Integer.parseInt(et.getText().toString());
+                    new LongOperation().execute();
                 }
             }
         });

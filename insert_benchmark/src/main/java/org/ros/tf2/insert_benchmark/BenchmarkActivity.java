@@ -191,18 +191,14 @@ public class BenchmarkActivity extends Activity
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(mRunBenchmark == false){
-                    new Thread(new Runnable() {
-                        public void run() {
-                            mRunBenchmark = true;
-                            EditText et = (EditText)findViewById(R.id.editNumLookups);
-                            mInsertionLoops = Integer.parseInt(et.getText().toString());
-                            EditText et2 = (EditText)findViewById(R.id.editFrames);
-                            mNumberFrames = Integer.parseInt(et2.getText().toString());
-                            EditText et3 = (EditText)findViewById(R.id.editBranching);
-                            mBranchingFactor = Integer.parseInt(et3.getText().toString());
-                            new LongOperation().execute("");
-                        }
-                    }).start();
+                    mRunBenchmark = true;
+                    EditText et = (EditText)findViewById(R.id.editNumLookups);
+                    mInsertionLoops = Integer.parseInt(et.getText().toString());
+                    EditText et2 = (EditText)findViewById(R.id.editFrames);
+                    mNumberFrames = Integer.parseInt(et2.getText().toString());
+                    EditText et3 = (EditText)findViewById(R.id.editBranching);
+                    mBranchingFactor = Integer.parseInt(et3.getText().toString());
+                    new LongOperation().execute();
                 }
             }
         });
