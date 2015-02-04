@@ -18,10 +18,16 @@ dependencies {
     compile project(':tf2_ros')
 }
 
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 10
     buildToolsVersion androidBuildToolsVersion
+    packagingOptions {
+        /* https://github.com/rosjava/android_core/issues/194 */
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'lib/armeabi/libtf2_ros.so'
+    }
 }
  

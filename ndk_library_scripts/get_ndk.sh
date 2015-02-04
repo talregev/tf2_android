@@ -11,7 +11,7 @@ if [ $# != 1 ] || [ $1 == '-h' ] || [ $1 == '--help' ]; then
 fi
 
 prefix=$(cd $1 && pwd)
-URL=http://dl.google.com/android/ndk/android-ndk-r9-$system.tar.bz2
+URL=http://dl.google.com/android/ndk/android-ndk-r10d-$system.tar.bz2
 
 download_bz2 $URL $prefix
 

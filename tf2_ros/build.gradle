@@ -27,15 +27,24 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
-    compile 'ros.android_core:android_gingerbread_mr1:0.0.0-SNAPSHOT'
-    compile 'com.github.rosjava.android_extras:gingerbread:0.1.0'
-    compile 'ros.rosjava_core:rosjava:0.0.0-SNAPSHOT'
+    compile 'org.ros.android_core:android_gingerbread_mr1:[0.1,0.2)'
+    compile 'org.ros.rosjava_core:rosjava:[0.1,0.2)'
+    compile 'com.github.rosjava.android_extras:gingerbread:[0.1,0.2)'
     compile fileTree(dir: "$buildDir/native-libs", include: '*.jar')
 }
 
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 10
     buildToolsVersion androidBuildToolsVersion
+    sourceSets.main {
+        jni.srcDirs = []
+        jniLibs.srcDir 'src/main/libs'
+    }
+    packagingOptions {
+        /* https://github.com/rosjava/android_core/issues/194 */
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
 }

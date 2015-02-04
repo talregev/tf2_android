@@ -15,3 +15,4 @@ build
 build.log
 build-log.xml
 docs.iml
+*.log
