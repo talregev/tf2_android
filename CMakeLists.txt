@@ -3,7 +3,7 @@ project(tf2_android)
 
 find_package(catkin REQUIRED rosjava_build_tools)
 
-catkin_android_setup(assembleRelease publishToMavenLocal)
+catkin_android_setup(assembleRelease publishToMavenLocal uploadArchives)
 
 catkin_package()
 
