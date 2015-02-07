@@ -1,31 +1,27 @@
 package org.ros.tf2.insert_benchmark;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.os.AsyncTask;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import org.ros.message.Duration;
+import org.ros.message.MessageFactory;
+import org.ros.message.Time;
+import org.ros.node.NodeConfiguration;
+import org.ros.tf2_ros.Buffer;
+
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
-import java.util.Vector;
 
 import geometry_msgs.Quaternion;
 import geometry_msgs.Transform;
 import geometry_msgs.TransformStamped;
 import geometry_msgs.Vector3;
 import tf2_msgs.TFMessage;
-
-import org.ros.tf2_ros.Buffer;
-import org.ros.message.Duration;
-import org.ros.message.MessageFactory;
-import org.ros.message.Time;
-import org.ros.node.NodeConfiguration;
 
 public class BenchmarkActivity extends Activity
 {

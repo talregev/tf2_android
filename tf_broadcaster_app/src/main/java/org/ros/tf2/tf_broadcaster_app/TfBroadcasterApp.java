@@ -11,12 +11,14 @@ import org.ros.android.RosActivity;
 import org.ros.message.Time;
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
-import org.ros.tf2_ros.TransformBroadcaster;
 import org.ros.tf2_ros.StaticTransformBroadcaster;
-import static java.lang.Math.*;
+import org.ros.tf2_ros.TransformBroadcaster;
 
 import geometry_msgs.Quaternion;
 import geometry_msgs.TransformStamped;
+
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 
 public class TfBroadcasterApp extends RosActivity
 {

@@ -1,22 +1,22 @@
 package org.ros.tf2.lookup_benchmark;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.os.AsyncTask;
-import android.os.Looper;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.Random;
-
-import geometry_msgs.TransformStamped;
-import org.ros.tf2_ros.Buffer;
 import org.ros.message.Duration;
 import org.ros.message.MessageFactory;
 import org.ros.message.Time;
 import org.ros.node.NodeConfiguration;
+import org.ros.tf2_ros.Buffer;
+
+import java.util.Random;
+
+import geometry_msgs.TransformStamped;
 
 public class BenchmarkActivity extends Activity
 {

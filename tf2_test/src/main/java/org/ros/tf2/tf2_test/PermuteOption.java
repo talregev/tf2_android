@@ -1,7 +1,6 @@
 package org.ros.tf2.tf2_test;
 
 import java.util.Iterator;
-import java.util.ListIterator;
 import java.util.Vector;
 
 public class PermuteOption<T> {

@@ -1,6 +1,5 @@
 package org.ros.tf2_ros;
 
-import geometry_msgs.TransformStamped;
 import org.ros.message.Duration;
 import org.ros.message.MessageListener;
 import org.ros.namespace.GraphName;
@@ -9,6 +8,8 @@ import org.ros.node.ConnectedNode;
 import org.ros.node.topic.Subscriber;
 
 import java.util.List;
+
+import geometry_msgs.TransformStamped;
 
 public class TransformListener extends AbstractNodeMain {
 

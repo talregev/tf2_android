@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.apache.http.util.ExceptionUtils;
-
 public class Tf2Test extends Activity
 {
 

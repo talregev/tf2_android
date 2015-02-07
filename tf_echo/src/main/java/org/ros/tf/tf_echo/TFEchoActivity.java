@@ -1,24 +1,17 @@
 package org.ros.tf.tf_echo;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.ros.android.MessageCallable;
+import org.ros.address.InetAddressFactory;
 import org.ros.android.RosActivity;
 import org.ros.message.Time;
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
-import org.ros.address.InetAddressFactory;
 import org.ros.tf2_ros.Buffer;
 import org.ros.tf2_ros.TransformListener;
-
-import java.util.TimerTask;
 
 import geometry_msgs.Quaternion;
 import geometry_msgs.Transform;
