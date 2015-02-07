@@ -26,9 +26,11 @@ buildscript {
     }
 }
 
+apply plugin: 'catkin'
+
 allprojects {
     group 'org.ros.tf2'
-    version = '0.0.0-SNAPSHOT'
+    version = project.catkin.pkg.version
 }
 
 ext.androidBuildToolsVersion = "21.1.2"
