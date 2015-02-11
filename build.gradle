@@ -48,4 +48,18 @@ subprojects {
     task publishToMavenLocal() << {
         description = 'installs .aar files to the local maven repository.'
     }
+
+    afterEvaluate { project ->
+        android {
+            buildToolsVersion androidBuildToolsVersion
+            packagingOptions {
+                /* https://github.com/rosjava/android_core/issues/194 */
+                exclude 'META-INF/LICENSE.txt'
+                exclude 'META-INF/NOTICE.txt'
+                exclude 'lib/armeabi/libtf2_ros.so'
+            }
+        }
+    }
 }
+
+defaultTasks 'assembleRelease', 'uploadArchives'

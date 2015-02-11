@@ -37,14 +37,8 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 10
-    buildToolsVersion androidBuildToolsVersion
     sourceSets.main {
         jni.srcDirs = []
         jniLibs.srcDir 'src/main/libs'
-    }
-    packagingOptions {
-        /* https://github.com/rosjava/android_core/issues/194 */
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
     }
 }
